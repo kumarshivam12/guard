@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: prometheus-operator
+  name: validatingwebhook
+  namespace: kube-system
+spec:
+  endpoints:
+  - interval: 90s
+    path: /metrics
+    port: https
+    scrapeTimeout: 5s
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  selector:
+    matchLabels:
+      app: validatingwebhook

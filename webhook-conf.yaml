@@ -1,0 +1,73 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: "validatingwebhook.kube-system.svc"
+webhooks:
+- name: "validatingwebhook.kube-system.svc"
+  namespaceSelector:
+    matchLabels:
+      webhook: enabled
+  rules:
+  - apiGroups:   ["*"]
+    apiVersions: ["v1", "v1beta1"]
+    operations:  ["DELETE"]
+    resources:   ["namespaces"]
+  clientConfig:
+    service:
+      namespace: "kube-system"
+      name: "validatingwebhook"
+      path: "/guard"
+    caBundle: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZhRENDQTFDZ0F3SUJBZ0lVQUtLNUZZQUd2K1pDSEU3bzZWem1WVjk3WVlnd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0xERXFNQ2dHQTFVRUF3d2hkbUZzYVdSaGRHbHVaM2RsWW1odmIyc3VhM1ZpWlMxemVYTjBaVzB1YzNaagpNQjRYRFRJeU1ERXhPREUxTkRBMU9Gb1hEVEl6TURFeE9ERTFOREExT0Zvd0xERXFNQ2dHQTFVRUF3d2hkbUZzCmFXUmhkR2x1WjNkbFltaHZiMnN1YTNWaVpTMXplWE4wWlcwdWMzWmpNSUlDSWpBTkJna3Foa2lHOXcwQkFRRUYKQUFPQ0FnOEFNSUlDQ2dLQ0FnRUF2QXYzdGVRS3RYdlZKRmR3RmJpYUlGWklyQnNzY0hUUklZWWh1WnFmV0Rpdwpnc3BySTFQNWx5d3FYVjBzMDljZlV0YnBEM29QUzNjcTlBcjdIR3FqcytBRVZzQ2JSYjdsVWRicjNVRjZmdGlYCkgxcDRrTFNkMng0YXBCZUZ1T2ZHQ2d6a0M0M082WUZNTGM0KzVFWkJvT2dJcmtONHVJR3hEMFdVcCs4V1hCMkQKVmpzVjJwYWdWNEZxS2Q3QmM2WG1SQnBKb2IzSURIbVFMYzJCMDhNazJxbGFPQjVKalBGbDVmUjNmOVFpUDRFSQpyNWQ5MEFvU2RsaEg2Y0svTmlYV1Z0UWtTNFRVaHZzZGhYYlJjZDJWMGlKbVBxVlFHMmFOeHV2bkJGU2xmVDM4CnBWNFVqcWlUNmRodnhBNk1QMW5sbmJsMFpNZjdsazZCK296S1R4UjVCenM4S2JwVWg3VVNzay9TQ0pmRTEvSWcKQytMOFpheUdqeWFyYVloaFZuWkd4RzVhMVlNQ2UySlBVYWU3aHpSY2thL1A1Q2ZjMVJGREtjOU9Hd09wMUFkeQpLdmxmdmhHUFN3a1ZnWmo4NlB6alVPb0J2TDk2aUhvYUo5L1RKR0dQaURuV2F0MHcvN0krSXFiOU1GeG1Gam4yClY1andrUlVQbU5yNC9DOTVIaXFnd3NESE42N3BrLzl4bWIvUmZTOTR2c3B1UVppejlHejlwY3JHaU9DWG9od1UKNDZXelNHVDJ6aTREWXlHS0VjNHhCQS9jakhpbVlTQ1E4VVNNYW9wTnltUFJHVE9XUnVmTW1tSlhwWFppYkpCZQp1c1dkVy9lUVZFOUljdk9GaG5kZDhCRUtuQWRQWXZOWWZDQ1NCeDBSS0JUVVJyNTQrTGx3TVZrL04yY2s4RThDCkF3RUFBYU9CZ1RCL01CMEdBMVVkRGdRV0JCUjdneXpTeTEwWVVGM2NZRE8yREN0N1hVbFR0ekFmQmdOVkhTTUUKR0RBV2dCUjdneXpTeTEwWVVGM2NZRE8yREN0N1hVbFR0ekFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQ3dHQTFVZApFUVFsTUNPQ0lYWmhiR2xrWVhScGJtZDNaV0pvYjI5ckxtdDFZbVV0YzNsemRHVnRMbk4yWXpBTkJna3Foa2lHCjl3MEJBUXNGQUFPQ0FnRUFzRzNZeWJqNXFqaDNRV0Q2Tkd4MzlWcW9GbGxtMVVLemhjWFpmc25FK3MxYks3amYKbXNvZ2pDYnZyNVJ6N0g4YlRXczJCbVN0NGI4UC95OWJyOU5FODlnWHFseFhtOTVDckVORjRBaGgwa1hhK3NDeQpURmlMNGNGNTBaNWZWcU91QW1MVjNtajBHU2FCOTlQVFF2U1BKMFdmOEU5VUFuVDRRTzFtS2tFWVJueDlxVUJmCnNrTTcwS2xrU2EwRktLdzFyQ1g3eVAzaGh2MTZxRDd6amxuREo5d2JtdUhjRkpkOGZxWmd6bEt3NC9haWlGTlkKUGhVNDB4RVBiYllwMTBHVmNTdEJicW5rTU42UlNhcmtmMkllaFh0TGhiRStUc0VwQ2hnblgzTWluZG5Ud0piSgpmd1QxTzhmWkc5NHQxUGpMQW5lYStYVk10ME5BTlZSWERlQ2d1NFprWDZ3aDRHNFdkNjUreWhlNGZtc2tBZ2NKCm9MT29Ba3lsYlp1QzBVWStGMTk0djZ1T2hFemt1d1VZKzAzZ1JXSDNUREoyYWNPblRjWkZ1LzVPK1F5aUpnb3AKc0tjSC9wWFVoUkNqeVY1clptbk16UExFM1I5bmJlSzV3ZlowTXg0QUNDTWJiUWZGcDRoQzRtVEc4RzdNcWpPYgpCOW9VcXIzaG5CekQ0d0dTU0UzM1VIcmtmRU9lcWtZcXFCRGRzOXFQUW5tYkZvcU04QUpNMUZ4bThETnVaT3kyCnpYMVVrZnJ6YnkyZ0dEeVhsajg0UW9uZDZrMFF0dHFmQUdoUndCY1RVR3FlNTNmZFN0bG5jckY2d2NzeGRSR3gKQ0p1TmZDTHhZV2VSd0cxczRmTm9YTGVNSkhBLzhMaS9DM0JCS2p6dXpxa1AvWmp3Vm1CU3laWmM5bjg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0="
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  timeoutSeconds: 5
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: validatingwebhook
+  namespace: kube-system
+automountServiceAccountToken: true
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validatingwebhook
+  namespace: kube-system
+  labels:
+    app: validatingwebhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: validatingwebhook
+  template:
+    metadata:
+      labels:
+        app: validatingwebhook
+    spec:
+      serviceAccountName: validatingwebhook
+      securityContext:
+        fsGroup: 65534
+      hostNetwork: true
+      containers:
+        - name: validatingwebhook
+          image: kshivam1996/val-kontoller
+          imagePullPolicy: Never
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          ports:
+            - containerPort: 8443
+          volumeMounts:
+            - name: serving-cert
+              mountPath: /var/run/webhook/serving-cert
+      volumes:
+        - name: serving-cert
+          secret:
+            secretName: certs

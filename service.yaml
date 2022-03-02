@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kube-system
+  labels:
+    app: validatingwebhook
+  name: validatingwebhook
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 8443
+      name: https
+  selector:
+    app: validatingwebhook
