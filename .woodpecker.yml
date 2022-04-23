@@ -1,0 +1,12 @@
+pipeline:
+  build:
+    image: golang
+    commands:
+      - go build
+      - go test
+
+  publish:
+    image: plugins/docker
+    settings:
+      repo: kumar1996/woodpecker
+      tags: latest
