@@ -7,7 +7,6 @@ pipeline:
   publish:
     image: plugins/docker
     settings:
-      username: $${DOCKER_USERNAME}
-      password: $${DOCKER_PASSWORD}
+      secrets: [ docker_username, docker_password ]
       repo: kumar1996/woodpecker
       tags: latest
