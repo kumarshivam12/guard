@@ -2,8 +2,7 @@ pipeline:
   build:
     image: golang:latest
     commands:
-      - go build
-      - go test
+      - go build -o ./app .
 
   publish:
     image: plugins/docker
